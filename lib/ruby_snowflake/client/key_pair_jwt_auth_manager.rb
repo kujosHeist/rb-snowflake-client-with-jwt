@@ -21,6 +21,9 @@ module RubySnowflake
       end
 
       def jwt_token
+        pre_fetched_token = ENV['snowflake_jwt_token']
+        return pre_fetched_token if not pre_fetched_token.nil?
+        
         return @token unless jwt_token_expired?
 
         @token_semaphore.acquire do
