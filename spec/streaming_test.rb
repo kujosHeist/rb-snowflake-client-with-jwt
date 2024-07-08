@@ -1,5 +1,5 @@
 require "benchmark"
-require "rb_snowflake_client"
+require "rb_snowflake_client_with_jwt"
 require 'dotenv/load'
 
 def new_client
