@@ -21,9 +21,14 @@ module RubySnowflake
       end
 
       def jwt_token
-        pre_fetched_token = ENV['snowflake_jwt_token']
-        return pre_fetched_token if not pre_fetched_token.nil?
-        
+        file_path = File.expand_path("~/snowflake_jwt_token.txt")
+        pre_fetched_token = File.read(file_path)
+        if not pre_fetched_token.nil?
+          puts "Using pre_fetched_token .... "
+          return pre_fetched_token
+        end
+
+        puts "Using old token ... "
         return @token unless jwt_token_expired?
 
         @token_semaphore.acquire do
