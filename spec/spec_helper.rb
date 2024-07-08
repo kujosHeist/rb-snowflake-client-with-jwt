@@ -1,4 +1,4 @@
-require "rb_snowflake_client"
+require "rb_snowflake_client_with_jwt"
 require "rspec"
 require "pry"
 require "dotenv/load"
