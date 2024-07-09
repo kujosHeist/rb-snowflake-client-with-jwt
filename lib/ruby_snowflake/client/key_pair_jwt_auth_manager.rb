@@ -22,8 +22,8 @@ module RubySnowflake
 
       def jwt_token
         file_path = File.expand_path("~/snowflake_jwt_token.txt")
-        pre_fetched_token = File.read(file_path)
-        if not pre_fetched_token.nil?
+        if File.exist?(file_path)
+          pre_fetched_token = File.read(file_path)
           puts "Using pre_fetched_token .... "
           return pre_fetched_token
         end
@@ -38,8 +38,10 @@ module RubySnowflake
           private_key = OpenSSL::PKey.read(@private_key_pem)
 
           payload = {
-            :iss => "#{@organization.upcase}-#{@account.upcase}.#{@user}.#{public_key_fingerprint}",
-            :sub => "#{@organization.upcase}-#{@account.upcase}.#{@user}",
+            # :iss => "#{@organization.upcase}-#{@account.upcase}.#{@user}.#{public_key_fingerprint}",
+            # :sub => "#{@organization.upcase}-#{@account.upcase}.#{@user}",
+            :iss => "#{@account.upcase}.#{@user.upcase}.#{public_key_fingerprint}",
+            :sub => "#{@account.upcase}.#{@user.upcase}",
             :iat => now,
             :exp => @token_expires_at
           }
